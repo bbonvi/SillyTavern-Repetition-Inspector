@@ -133,7 +133,7 @@ async function calculate(params = {}) {
         chatFiltered = chatFiltered.slice(0, -1)
     }
 
-    const text = context.chat.slice(-chatTrunc).filter(m => (!m.is_user || includeUser) && (includeSystem || !m.is_system)).map(m => m.mes).slice(-lastN).join("\n")
+    const text = chatFiltered.map(m => m.mes).slice(-lastN).join("\n")
 
     let words = [];
     words = text.split(" ");
