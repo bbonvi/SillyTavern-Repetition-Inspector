@@ -326,7 +326,7 @@ SlashCommandParser.addCommandObject(SlashCommand.fromProps({
     callback: (namedArgs, unnamedArgs) => {
         const lastN = parseInt(namedArgs.n || 50, 10);
         const includeUser = namedArgs.include_user === "on";
-        const cutoff = Math.max(parseInt(namedArgs.min_rep || 2, 10));
+        const cutoff = Math.max(parseInt(namedArgs.cutoff || 2, 10));
 
         calculate({ lastN, includeUser, cutoff })
     },
@@ -340,8 +340,8 @@ SlashCommandParser.addCommandObject(SlashCommand.fromProps({
             defaultValue: "100",
         }),
         SlashCommandNamedArgument.fromProps({
-            name: 'min_rep',
-            description: 'Repetition cutoff',
+            name: 'cutoff',
+            description: 'Filters out repetitions that are fewer than this specified number. (Minimum: 2)',
             typeList: "number",
             defaultValue: "2",
         }),
