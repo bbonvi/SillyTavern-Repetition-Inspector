@@ -4,6 +4,8 @@ Identify and analyze repeated words and patterns in your chat to minimize AI-gen
 
 *This extension helps you detect and address repetitive language in your chat, enhancing the overall quality and variety of AI responses.*
 
+![](https://github.com/bbonvi/SillyTavern-Repetition-Inspector/blob/main/screenshots/shot1.png?raw=true)
+
 ## Installation and Usage
 
 ### Installation
