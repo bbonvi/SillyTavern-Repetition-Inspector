@@ -1,6 +1,8 @@
 {
     "display_name": "Repetition Inspector",
     "js": "index.js",
+    "requires": [],
+    "optional": [],
     "author": "bbonvi",
     "version": "1.0.0",
     "auto_update": true
