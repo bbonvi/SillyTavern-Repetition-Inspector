@@ -334,14 +334,15 @@ SlashCommandParser.addCommandObject(SlashCommand.fromProps({
         const includeUser = namedArgs.include_user === "on";
         const cutoff = Math.max(parseInt(namedArgs.cutoff || 2, 10));
         const ignoreLast = namedArgs.ignore_last === "on";
+        const save = namedArgs.save === "on";
 
         const slashCommandInput = [
             "/inrep",
-            "n=" + namedArgs.n,
-            "include_user=" + namedArgs.include_user,
-            "cutoff=" + namedArgs.cutoff,
-            "ignore_last=" + namedArgs.ignore_last,
-            "save=" + namedArgs.save,
+            "n=" + lastN,
+            "include_user=" + (includeUser ? "on" : "off"),
+            "cutoff=" + cutoff,
+            "ignore_last=" + (ignoreLast ? "on" : "off"),
+            "save=" + (save ? "on" : "off"),
         ].join(" ");
 
         if (namedArgs.save && document.querySelector("#send_textarea")) {
