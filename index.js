@@ -1,5 +1,5 @@
 // COMMENT OUT FOR DEBUG
-import { getContext } from "../../extensions.js";
+import { getContext } from "../../../extensions.js";
 const context = getContext();
 
 // UNCOMMENT FOR DEBUG
