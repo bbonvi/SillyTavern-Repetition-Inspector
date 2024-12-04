@@ -120,11 +120,17 @@ async function calculate(params = {}) {
         includeUser = false,
         includeSystem = false,
         cutoff = 2,
+        ignoreLast = false,
     } = params;
 
     let chatTrunc = parseInt(document.querySelector("#chat_truncation_counter")?.value || "100", 10)
     if (chatTrunc == 0) {
         chatTrunc = 10000000;
+    }
+
+    let chatFiltered = context.chat.slice(-chatTrunc).filter(m => (!m.is_user || includeUser) && (includeSystem || !m.is_system));
+    if (ignoreLast) {
+        chatFiltered = chatFiltered.slice(0, -1)
     }
 
     const text = context.chat.slice(-chatTrunc).filter(m => (!m.is_user || includeUser) && (includeSystem || !m.is_system)).map(m => m.mes).slice(-lastN).join("\n")
@@ -327,8 +333,21 @@ SlashCommandParser.addCommandObject(SlashCommand.fromProps({
         const lastN = parseInt(namedArgs.n || 50, 10);
         const includeUser = namedArgs.include_user === "on";
         const cutoff = Math.max(parseInt(namedArgs.cutoff || 2, 10));
+        const ignoreLast = namedArgs.ignore_last === "on";
 
-        calculate({ lastN, includeUser, cutoff })
+        const slashCommandInput = [
+            "/inrep",
+            "n=" + namedArgs.n,
+            "include_user=" + namedArgs.include_user,
+            "cutoff=" + namedArgs.cutoff,
+            "ignore_last=" + namedArgs.ignore_last,
+            "save=" + namedArgs.save,
+        ].join(" ");
+
+        if (namedArgs.save && document.querySelector("#send_textarea")) {
+            document.querySelector("#send_textarea").value = slashCommandInput;
+        }
+        calculate({ lastN, includeUser, cutoff, ignoreLast })
     },
     aliases: ['inrep'],
     returns: 'Repetition Inspector Window',
@@ -340,6 +359,13 @@ SlashCommandParser.addCommandObject(SlashCommand.fromProps({
             defaultValue: "100",
         }),
         SlashCommandNamedArgument.fromProps({
+            name: 'ignore_last',
+            description: 'Ignore last message',
+            typeList: "bool",
+            defaultValue: "off",
+            enumList: ["on", "off"],
+        }),
+        SlashCommandNamedArgument.fromProps({
             name: 'cutoff',
             description: 'Filters out repetitions that are fewer than this specified number. (Minimum: 2)',
             typeList: "number",
@@ -348,6 +374,13 @@ SlashCommandParser.addCommandObject(SlashCommand.fromProps({
         SlashCommandNamedArgument.fromProps({
             name: 'include_user',
             description: 'Include user message',
+            typeList: "bool",
+            defaultValue: "off",
+            enumList: ["on", "off"],
+        }),
+        SlashCommandNamedArgument.fromProps({
+            name: 'save',
+            description: 'Preserve slash command between executions',
             typeList: "bool",
             defaultValue: "off",
             enumList: ["on", "off"],
