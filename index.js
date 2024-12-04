@@ -119,6 +119,7 @@ async function calculate(params = {}) {
         lastN = 50,
         includeUser = false,
         includeSystem = false,
+        cutoff = 2,
     } = params;
 
     let chatTrunc = parseInt(document.querySelector("#chat_truncation_counter")?.value || "100", 10)
@@ -140,8 +141,7 @@ async function calculate(params = {}) {
             nGrams[nGram] = (nGrams[nGram] || 0) + 1;
         }
 
-        // Filter n-grams with more than 1 repetition
-        let filteredNGrams = Object.entries(nGrams).filter(([, count]) => count > 1);
+        let filteredNGrams = Object.entries(nGrams).filter(([, count]) => count >= cutoff);
 
         // Merge overlapping n-grams
         const mergedNGrams = [];
@@ -326,8 +326,9 @@ SlashCommandParser.addCommandObject(SlashCommand.fromProps({
     callback: (namedArgs, unnamedArgs) => {
         const lastN = parseInt(namedArgs.n || 50, 10);
         const includeUser = namedArgs.include_user === "on";
+        const cutoff = Math.max(parseInt(namedArgs.min_rep || 2, 10));
 
-        calculate({ lastN, includeUser })
+        calculate({ lastN, includeUser, cutoff })
     },
     aliases: ['inrep'],
     returns: 'Repetition Inspector Window',
@@ -337,6 +338,12 @@ SlashCommandParser.addCommandObject(SlashCommand.fromProps({
             description: 'Only process the last N messages.',
             typeList: "number",
             defaultValue: "100",
+        }),
+        SlashCommandNamedArgument.fromProps({
+            name: 'min_rep',
+            description: 'Repetition cutoff',
+            typeList: "number",
+            defaultValue: "2",
         }),
         SlashCommandNamedArgument.fromProps({
             name: 'include_user',
