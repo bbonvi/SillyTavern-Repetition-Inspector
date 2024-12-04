@@ -330,7 +330,7 @@ document.addEventListener("click", (e) => {
 SlashCommandParser.addCommandObject(SlashCommand.fromProps({
     name: 'inrep',
     callback: (namedArgs, unnamedArgs) => {
-        const lastN = parseInt(namedArgs.n || 50, 10);
+        const lastN = parseInt(namedArgs.n || 100, 10);
         const includeUser = namedArgs.include_user === "on";
         const cutoff = Math.max(parseInt(namedArgs.cutoff || 2, 10));
         const ignoreLast = namedArgs.ignore_last === "on";
@@ -338,12 +338,12 @@ SlashCommandParser.addCommandObject(SlashCommand.fromProps({
 
         const slashCommandInput = [
             "/inrep",
-            "n=" + lastN,
-            "include_user=" + (includeUser ? "on" : "off"),
-            "cutoff=" + cutoff,
-            "ignore_last=" + (ignoreLast ? "on" : "off"),
-            "save=" + (save ? "on" : "off"),
-        ].join(" ");
+            (namedArgs.n != null ? "n=" + lastN : ""),
+            (namedArgs.include_user != null ? "include_user=" + (includeUser ? "on" : "off") : ""),
+            (namedArgs.cutoff != null ? "cutoff=" + cutoff : ""),
+            (namedArgs.ignore_last != null ? "ignore_last=" + (ignoreLast ? "on" : "off") : ""),
+            (namedArgs.save != null ? "save=" + (save ? "on" : "off") : ""),
+        ].filter(c => !!c).join(" ");
 
         if (namedArgs.save && document.querySelector("#send_textarea")) {
             document.querySelector("#send_textarea").value = slashCommandInput;
