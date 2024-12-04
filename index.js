@@ -234,7 +234,7 @@ async function calculate(params = {}) {
     const sequence3 = getNGrams(text, 4, 40);
     const sequence4 = getNGrams(text, 3, 40);
     const sequence5 = getNGrams(text, 2, 40);
-    const sequence6 = getNGrams(text, 1, 40);
+    const sequence6 = getNGrams(text, 1, 80);
 
     let output = ``;
 
