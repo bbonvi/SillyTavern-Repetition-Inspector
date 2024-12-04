@@ -1,0 +1,7 @@
+{
+  "name": "Repetition Inspector",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "author": "bbonvi",
+}
