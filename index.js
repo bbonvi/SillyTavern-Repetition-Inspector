@@ -239,7 +239,7 @@ async function calculate(params = {}) {
     let output = ``;
 
     output += `<strong>Click on sequence to jump to the last occurence and edit it.</strong>`
-    output += '<pre class="bo-ngrams" style="text-align: left; padding: 10px;">'
+    output += '<pre class="bo-ngrams" style="text-align: left; padding: 10px; white-space: break-spaces;">'
 
     output += `<h3>Longer sequences</h3>`
     output += "<br/>"
