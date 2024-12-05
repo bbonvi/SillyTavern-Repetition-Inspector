@@ -311,7 +311,7 @@ async function calculate(params = {}) {
     output += `<h3>Words that are often grouped together (with score)</h3>`
     output += "<br/>"
 
-    output += calculateProximity(text, 3, 3).map((f) => `<strong class="bo-ngram">${f.words.join(',')}</strong>: ${f.score}`)
+    output += calculateProximity(text, 3, 3).map((f) => `<strong class="bo-ngram">${f.words.join(',')}</strong>: ${f.score}`).join("\n")
 
     output += "</pre>"
 
