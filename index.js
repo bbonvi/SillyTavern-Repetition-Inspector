@@ -81,6 +81,36 @@ function cleanWord(word) {
 }
 let popup = null
 
+function calculateProximity(text, maxWords = 2, maxDistance = 3) {
+    const words = text.toLowerCase().replace(/[^a-z\s]/g, '').split(/\s+/);
+    const proximityMap = new Map();
+
+    for (let i = 0; i < words.length; i++) {
+        for (let j = 1; j <= maxDistance; j++) {
+            if (i + j >= words.length) break;
+
+            for (let k = 2; k <= maxWords; k++) {
+                if (i + j + k - 1 >= words.length) break;
+                const wordGroup = words.slice(i, i + k).sort().join(' ');
+
+                if (!proximityMap.has(wordGroup)) {
+                    proximityMap.set(wordGroup, 0);
+                }
+                proximityMap.set(wordGroup, proximityMap.get(wordGroup) + 1);
+            }
+        }
+    }
+
+    const sortedProximity = Array.from(proximityMap.entries())
+        .sort((a, b) => b[1] - a[1])
+        .filter(entry => entry[1] > 1);
+
+    return sortedProximity.map(([wordGroup, score]) => ({
+        words: wordGroup.split(" "),
+        score
+    }));
+}
+
 function tokenize(text) {
     const tokens = [];
     let currentToken = '';
@@ -250,26 +280,38 @@ async function calculate(params = {}) {
     output += `<h3>Longer sequences</h3>`
     output += "<br/>"
     output += sequence1[1].map(([text, rep]) => `<strong class="bo-ngram">${text}</strong>: ${rep}`).join("\n")
+    output += "<br/>"
 
     output += `<h3>Long sequences</h3>`
     output += "<br/>"
     output += sequence2[1].map(([text, rep]) => `<strong class="bo-ngram">${text}</strong>: ${rep}`).join("\n")
+    output += "<br/>"
 
     output += `<h3>Short sequences</h3>`
     output += "<br/>"
     output += sequence3[1].map(([text, rep]) => `<strong class="bo-ngram">${text}</strong>: ${rep}`).join("\n")
+    output += "<br/>"
 
     output += `<h3>Shorter sequences</h3>`
     output += "<br/>"
     output += sequence4[0].map(([text, rep]) => `<strong class="bo-ngram">${text}</strong>: ${rep}`).join("\n")
+    output += "<br/>"
 
     output += `<h3>Very short sequences</h3>`
     output += "<br/>"
     output += sequence5[0].map(([text, rep]) => `<strong class="bo-ngram">${text}</strong>: ${rep}`).join("\n")
+    output += "<br/>"
 
     output += `<h3>Words</h3>`
     output += "<br/>"
     output += sequence6[0].map(([text, rep]) => `<strong class="bo-ngram">${text}</strong>: ${rep}`).join("\n")
+    output += "<br/>"
+
+
+    output += `<h3>Words that are often grouped together (with score)</h3>`
+    output += "<br/>"
+
+    output += calculateProximity(text, 3, 3).map((f) => `<strong class="bo-ngram">${f.words.join(',')}</strong>: ${f.score}`)
 
     output += "</pre>"
 
