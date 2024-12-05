@@ -54,7 +54,6 @@ injectStyle(`
             color: var(--SmartThemeBlurTintColor);
             position: fixed;
             z-index: 100000000;
-            /*pointer-events: none; */
             opacity: 0.7;
         }
         .bo-ngram {
@@ -311,7 +310,7 @@ async function calculate(params = {}) {
     output += `<h3>Words that are often grouped together (with score)</h3>`
     output += "<br/>"
 
-    output += calculateProximity(text, 3, 3).slice(0, 60).map((f) => `<strong class="bo-ngram">${f.words.join(',')}</strong>: ${f.score}`).join("\n")
+    output += calculateProximity(text, 3, 3).slice(0, 100).map((f) => `<strong class="bo-ngram">${f.words.join(',')}</strong>: ${f.score}`).join("\n")
 
     output += "</pre>"
 
