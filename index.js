@@ -66,9 +66,9 @@ injectStyle(`
             padding: 2px 2px !important;
             margin: 2px;
             filter: invert(0.1);
-            cursor: pointer;
         }
-        .bo-ngram:hover {
+        .bo-ngram.click:hover {
+            cursor: pointer;
             opacity: 0.8;
         }
         
@@ -279,32 +279,32 @@ async function calculate(params = {}) {
 
     output += `<h3>Longer sequences</h3>`
     output += "<br/>"
-    output += sequence1[1].map(([text, rep]) => `<strong class="bo-ngram">${text}</strong>: ${rep}`).join("\n")
+    output += sequence1[1].map(([text, rep]) => `<strong class="bo-ngram click">${text}</strong>: ${rep}`).join("\n")
     output += "<br/>"
 
     output += `<h3>Long sequences</h3>`
     output += "<br/>"
-    output += sequence2[1].map(([text, rep]) => `<strong class="bo-ngram">${text}</strong>: ${rep}`).join("\n")
+    output += sequence2[1].map(([text, rep]) => `<strong class="bo-ngram click">${text}</strong>: ${rep}`).join("\n")
     output += "<br/>"
 
     output += `<h3>Short sequences</h3>`
     output += "<br/>"
-    output += sequence3[1].map(([text, rep]) => `<strong class="bo-ngram">${text}</strong>: ${rep}`).join("\n")
+    output += sequence3[1].map(([text, rep]) => `<strong class="bo-ngram click">${text}</strong>: ${rep}`).join("\n")
     output += "<br/>"
 
     output += `<h3>Shorter sequences</h3>`
     output += "<br/>"
-    output += sequence4[0].map(([text, rep]) => `<strong class="bo-ngram">${text}</strong>: ${rep}`).join("\n")
+    output += sequence4[0].map(([text, rep]) => `<strong class="bo-ngram click">${text}</strong>: ${rep}`).join("\n")
     output += "<br/>"
 
     output += `<h3>Very short sequences</h3>`
     output += "<br/>"
-    output += sequence5[0].map(([text, rep]) => `<strong class="bo-ngram">${text}</strong>: ${rep}`).join("\n")
+    output += sequence5[0].map(([text, rep]) => `<strong class="bo-ngram click">${text}</strong>: ${rep}`).join("\n")
     output += "<br/>"
 
     output += `<h3>Words</h3>`
     output += "<br/>"
-    output += sequence6[0].map(([text, rep]) => `<strong class="bo-ngram">${text}</strong>: ${rep}`).join("\n")
+    output += sequence6[0].map(([text, rep]) => `<strong class="bo-ngram click">${text}</strong>: ${rep}`).join("\n")
     output += "<br/>"
 
 
